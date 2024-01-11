@@ -1,0 +1,78 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+	<div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark" style="width: 280px; height:100vh; position:fixed">
+		<a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+			<svg class="bi me-2" width="40" height="32">
+				<use xlink:href="#bootstrap"></use>
+			</svg>
+			<span class="fs-4">Blog Master 1</span>
+		</a>
+		<hr>
+		<ul class="nav nav-pills flex-column mb-auto">
+			<li class="nav-item">
+				<a href="{{ path('app_admin_index') }}" class="nav-link text-white" aria-current="page">
+					<i class="fa-solid fa-house me-2"></i>
+					Accueil
+				</a>
+			</li>
+			<li>
+				<a href="{{ path('app_admin_tags_list') }}" class="nav-link text-white">
+					<i class="fa-solid fa-tag me-2"></i>
+					Tags
+				</a>
+			</li>
+			<li>
+				<a href="{{ path('app_admin_categories_list') }}" class="nav-link text-white">
+					<i class="fa-solid fa-filter me-2"></i>
+					Catégories
+				</a>
+			</li>
+			<li>
+				<a href="{{ path('app_admin_article_list') }}" class="nav-link text-white">
+					<i class="fa-solid fa-newspaper me-2"></i>
+					Posts
+				</a>
+			</li>
+			<li>
+				<a href="{{ path('app_admin_medias_list') }}" class="nav-link text-white">
+					<i class="fa-solid fa-image me-2"></i>
+					Medias
+				</a>
+			</li>
+			<li>
+				<a href="{{ path('app_admin_users_list') }}" class="nav-link text-white">
+					<i class="fa-solid fa-users me-2"></i>
+					Utilisateurs
+				</a>
+			</li>
+		</ul>
+		<hr>
+		<div class="dropdown">
+			<a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+				<img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
+				<strong>{{ app.user.username }}</strong>
+			</a>
+			<ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1" style="">
+				<li>
+					<a class="dropdown-item" href="#">Mon profil</a>
+				</li>
+				<li>
+					<a class="dropdown-item" href="{{ path('app_home') }}">Retour au blog</a>
+				</li>
+				<li><hr class="dropdown-divider"></li>
+				<li>
+					<a class="dropdown-item text-danger" href="{{ path('app_logout') }}">
+						<i class="fa-solid fa-right-from-bracket me-2"></i>
+						Se déconnecter
+					</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+
+	<div class="content p-3" style="width: calc(100vw - 280px);height: 100vh;position: absolute;top: 0;right: 0;">
+		{% block content %}{% endblock %}
+	</div>
+
+{% endblock %}

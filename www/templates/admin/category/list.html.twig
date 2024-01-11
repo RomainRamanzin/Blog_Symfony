@@ -1,0 +1,75 @@
+{% extends 'adminMenu.html.twig' %}
+
+{% block title %}Les Catégories
+{% endblock %}
+
+{% block content %}
+
+	<div class="example-wrapper">
+		<h1>Liste des catégories</h1>
+
+		<div class="m-3">
+			<a class="btn btn-primary" href="{{ path('app_admin_category_create') }}">Créer une catégorie</a>
+		</div>
+
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th scope="col">id</th>
+					<th scope="col">Nom</th>
+					<th scope="col">Parent</th>
+					<th scope="col">enfants</th>
+					<th scope="col">arborescence</th>
+					<th scope="col">actions</th>
+				</tr>
+			</thead>
+
+			<tbody>
+				{% for category in categories %}
+					<tr>
+						<td class="align-middle">{{ category.id }}</td>
+						<td class="align-middle">{{ category.name }}</td>
+						<td class="align-middle">{{ category.parent ? category.parent.name : '-' }}</td>
+						<td class="align-middle">
+							{% for children in category.children %}
+								>
+								{{ children.name }}
+							{% endfor %}
+							{% if category.children|length == 0 %}
+								-
+							{% endif %}
+						</td>
+
+						<td class="align-middle">
+							{% set category_loop = category %}
+							{% for i in 0..10 %}
+                                        {% if category_loop.parent %}
+                                        	{{ category_loop.parent.name }} ->
+                                        	{% set category_loop = category_loop.parent %}
+                                        {% endif %}
+                                   {% endfor %}
+							{{ category.name }}
+						</td>
+
+
+						<td
+							class="align-middle">
+							<a class="btn btn-primary btn-sm" href="{{ path('app_admin_category_view', {'id' : category.id}) }}"><i class="fa-solid fa-eye"></i></a>
+							<a class="btn btn-warning btn-sm" href="{{ path('app_admin_category_update', {'id' : category.id}) }}">
+								<i class="fa-solid fa-pen-to-square"></i>
+							</a>
+							<a class="btn btn-danger btn-sm" href="{{ path('app_admin_category_delete', {'id' : category.id}) }}" onclick="return confirm('Voulez vous vraiment supprimer cette catégorie ?');">
+								<i class="fa-solid fa-trash"></i>
+							</a>
+						</td>
+					</tr>
+				{% endfor %}
+				{% if categories|length == 0 %}
+					<tr>
+						<td class="text-center" colspan="5">Aucune catégorie</td>
+					</tr>
+				{% endif %}
+			</tbody>
+		</table>
+	</div>
+{% endblock %}

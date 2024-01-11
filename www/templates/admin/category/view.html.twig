@@ -1,0 +1,23 @@
+{% extends 'adminMenu.html.twig' %}
+
+{% block content %}
+
+	<a href="{{ path('app_admin_categories_list') }}">
+		<i class="fa-solid fa-arrow-left-long"></i>
+		Retour à la liste des catégories</a>
+	<h1>Nom de la catégorie :
+		{{ category.name }}
+	</h1>
+
+	<p>Arborescence :
+		{% set category_loop = category %}
+		{% for i in 0..10 %}
+			{% if category_loop.parent %}
+				{{ category_loop.parent.name }}
+				->
+				{% set category_loop = category_loop.parent %}
+			{% endif %}
+		{% endfor %}
+		{{ category.name }}
+	</p>
+{% endblock %}

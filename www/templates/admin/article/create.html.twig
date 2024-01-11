@@ -1,0 +1,54 @@
+{% extends 'adminMenu.html.twig' %}
+
+{% block title %}Création d'un article
+{% endblock %}
+
+{% block content %}
+
+	<div class="example-wrapper">
+		<h1>{{ edit ? 'Edition' : 'Création' }}
+			d'un article</h1>
+
+		{{ form_start(createArticleForm) }}
+
+		{{ form_row(createArticleForm.title) }}
+		{{ form_row(createArticleForm.data) }}
+		{{ form_row(createArticleForm.publishedAt) }}
+		{{ form_row(createArticleForm.slug) }}
+		{{ form_row(createArticleForm.titleSeo) }}
+		{{ form_row(createArticleForm.descriptionSeo) }}
+		{{ form_row(createArticleForm.category) }}
+		{# {{ form_row(createArticleForm.media) }} #}
+		<div>
+			<label for="{{createArticleForm.media.vars.id}}">{{ createArticleForm.media.vars.name|capitalize }}</label>
+
+			<div id="{{ createArticleForm.media.vars.id }}">
+				{% for key, choice in createArticleForm.media.vars.choices %}
+
+                    {% set checked = '' %}
+                    {% if choice.value == createArticleForm.media.vars.value %}
+                        {% set checked = 'checked' %}
+                    {% endif %}
+
+					<div>
+						<input type="checkbox" id="{{ createArticleForm.media.vars.id }}_{{ key }}" name="{{ createArticleForm.media.vars.full_name }}" value="{{ choice.value }}" {{ checked }} />
+                        <label for="{{ createArticleForm.media.vars.id }}_{{ key }}"><img src="{{ choice.label }}" height="30"> {{ choice.label }}</label>
+					</div>
+
+				{% endfor %}
+			</div>
+
+			{# {{ form_widget(createArticleForm.media) }} #}
+			{{ form_help(createArticleForm.media) }}
+			{{ form_errors(createArticleForm.media) }}
+		</div>
+		{{ form_row(createArticleForm.tags) }}
+		{{ form_row(createArticleForm.send) }}
+
+		{{ form_widget(createArticleForm._token) }}
+
+		{# on ne peut pas utilise le form end sinon il render 2 fois le média, que l'on a choisi de faire à la main  #}
+		{{ form_end(createArticleForm, {'render_rest': false}) }}
+
+	</div>
+{% endblock %}

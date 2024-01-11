@@ -1,0 +1,12 @@
+{% extends 'adminMenu.html.twig' %}
+
+{% block title %}Création d'un média{% endblock %}
+
+{% block content %}
+
+<div class="example-wrapper">
+    <h1>{{ edit ? 'Edition' : 'Création' }} d'un média</h1>
+
+    {{ form(createMediaForm) }}
+</div>
+{% endblock %}

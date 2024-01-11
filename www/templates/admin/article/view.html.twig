@@ -1,0 +1,79 @@
+{% extends 'adminMenu.html.twig' %}
+
+{% block title %}Voir article
+{% endblock %}
+
+{% block content %}
+
+	<div class="example-wrapper">
+
+		<a href="{{ path('app_admin_article_list') }}">
+			<i class="fa-solid fa-arrow-left-long"></i>
+			Retour à la liste des articles</a>
+
+		<div>
+			{% set content = article.contents|last %}
+
+			<h1>Titre de l'article :
+				{{ article.title }}</h1>
+
+			<p>Contenu de l'article :
+				{{ article.contents is not empty ? content.data : '' }}</p>
+			{# <p>{{ content is not same as(false) ? content.data : '' }}</p> #}
+		</div>
+
+		<div style="border: solid 1px black; padding:1rem">
+			<ul>
+				<li>Auteur :
+					{{ article.author.username }}</li>
+				<li>Titre SEO :
+					{{ article.titleSeo }}</li>
+				<li>Description SEO :
+					{{ article.descriptionSeo }}</li>
+				<li>Permalien :
+					{{ article.slug }}</li>
+				<li>catégorie :
+					{{ article.category ? article.category.name : '-' }}</li>
+				<li>Tags :
+					{% for tag in article.tags %}
+						<span class="badge bg-primary">{{ tag.name }}</span>
+					{% else %}
+						-
+					{% endfor %}
+				</li>
+			</ul>
+			<hr>
+			<ul>
+				<li>Date création :
+					{{ article.createdAt|date('d/m/Y') }}</li>
+				<li>Date publication :
+					{{ article.publishedAt|date('d/m/Y') }}</li>
+				{# <li>Date suppression : {% if article.deletedAt is not null %}{{ article.deletedAt|date('d/m/Y') }}{% endif %}</li> #}
+				<li>Date suppression :
+					{{ article.deletedAt is not null ? article.deletedAt|date('d/m/Y') : '' }}</li>
+			</ul>
+		</div>
+
+		<div style="border: solid 1px grey; padding:1rem; margin-top:5rem">
+			{% for content in article.contents %}
+				<span style="color: red">parent :
+					{{ content.parent is not null ? content.parent.id : 'aucun' }}</span>
+				<p>content data :
+					{{ content.data }}</p>
+				{% for media in content.media %}
+					<p>Média title: {{ media.title }}</p>	
+					<p>Média url: {{ media.path }}</p>
+					<p>Média:</p>
+					<img src="{{ asset('uploads/' ~ media.path) }}" height="100" alt="">
+
+				{% endfor %}
+
+				{% if loop.last is same as (false) %}
+					<hr>
+				{% endif %}
+			{% else %}
+				<span style="background-color: red; color: white">aucun historique</span>
+			{% endfor %}
+		</div>
+	</div>
+{% endblock %}

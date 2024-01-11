@@ -1,0 +1,58 @@
+{% extends 'adminMenu.html.twig' %}
+
+{% block title %}Les articles{% endblock %}
+
+{% block content %}
+
+<div class="example-wrapper">
+    <h1>Liste des articles</h1>
+
+    <div class="m-3">
+        <a class="btn btn-primary" href="{{ path('app_admin_article_create') }}">Créer un article</a>
+    </div>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">id</th>
+                <th scope="col">titre SEO</th>
+                <th scope="col">titre</th>
+                <th scope="col">catégorie</th>
+                <th scope="col">tags</th>
+                <th scope="col">description SEO</th>
+                <th scope="col">slug</th>
+                <th scope="col">date création</th>
+                <th scope="col">date publication</th>
+                <th scope="col">actions</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for article in articleList %}
+                <tr>
+                    <td class="align-middle">{{ article.id }}</td>
+                    <td class="align-middle">{{ article.titleSeo }}</td>
+                    <td class="align-middle">{{ article.title }}</td>
+                    <td class="align-middle">{{ article.category ? article.category.name : '-' }}</td>
+                    <td class="align-middle">
+                        {% for tag in article.tags %}
+                            <span class="badge bg-primary">{{ tag.name }}</span>
+                        {% else %}
+                            -
+                        {% endfor %}
+                    </td>
+                    <td class="align-middle">{{ article.descriptionSeo }}</td>
+                    <td class="align-middle">{{ article.slug }}</td>
+                    <td class="align-middle">{{ article.createdAt|date('d/m/Y') }}</td>
+                    <td class="align-middle">{{ article.publishedAt|date('d/m/Y') }}</td>
+                    <td class="align-middle">
+                        <a class="btn btn-primary btn-sm" href="{{ path('app_admin_article_view', {'id' : article.id}) }}"><i class="fa-solid fa-eye"></i></a>
+                        <a class="btn btn-warning btn-sm" href="{{ path('app_admin_article_update', {'id' : article.id}) }}"><i class="fa-solid fa-pen-to-square"></i></a>
+                        <a class="btn btn-danger btn-sm" href="#"><i class="fa-solid fa-trash"></i></a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
