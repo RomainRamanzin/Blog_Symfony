@@ -1,6 +1,5 @@
 /.vscode
 /data/*
 /logs/*
-/bin/*
 .DS_Store
 /buildtest
